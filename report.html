@@ -11800,7 +11800,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import libraries</span>
@@ -11852,7 +11852,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Calculate number of students</span>
@@ -11869,7 +11869,7 @@ div#notebook {
 <span class="n">n_failed</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">student_data</span><span class="p">[(</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">)])</span>
 
 <span class="c1"># TODO: Calculate graduation rate</span>
-<span class="n">grad_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_passed</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span>
+<span class="n">grad_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_passed</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span><span class="o">*</span><span class="mf">100.0</span>
 
 <span class="c1"># Print the results</span>
 <span class="k">print</span> <span class="s2">&quot;Total number of students: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span>
@@ -11893,7 +11893,7 @@ div#notebook {
 Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
-Graduation rate of the class: 0.67%
+Graduation rate of the class: 67.09%
 </pre>
 </div>
 </div>
@@ -11916,7 +11916,7 @@ Graduation rate of the class: 0.67%
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Extract feature columns</span>
@@ -11998,7 +11998,7 @@ Feature values:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">preprocess_features</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
@@ -12069,7 +12069,7 @@ Feature values:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import any additional functionality you may need here</span>
@@ -12153,7 +12153,12 @@ Testing set has 95 samples.
 <p><strong>Answer: </strong></p>
 <h4 id="Learning-Model-Selection-Method:">Learning Model Selection Method:<a class="anchor-link" href="#Learning-Model-Selection-Method:">&#182;</a></h4><p>We know from <em>Minimum Description Length</em> in <em>Bayesian Methods: Bayesian Learning</em> and <em>Preference Bias</em> in <em>Artificial Neural Networks: Neural Networks</em> sections that in general the best supervised learning model has a minimum description length, or a preference bias for the least steps to get to the correct answer: the <em>Occam's Razor</em> principle.  This means that we should not unneccessarily choose a more complex model when a simpler model give us the same accuracy.</p>
 <p>Following this principle, e.g.: the simplest model is the best, and we should only add additional features, learning models, etc. (complexity) only to gain required additional accuracy, I recommend we start with <strong>Decision Tree Classifier</strong>, and then use <strong>Support Vector Machines Classifier (SVC)</strong>, or <strong>Ensemble Methods: Random Forest Classifier (RandomForestClassifier)</strong> learning models only if the required accuracy justify the additional computational cost.</p>
-<h5 id="Decision-Tree-Classifier:">Decision Tree Classifier:<a class="anchor-link" href="#Decision-Tree-Classifier:">&#182;</a></h5><p>This learning model uses a tree structure to represent decision boundaries, where a series of questions are asked until a final descrete output answer is obtained.  There is an ID3 algorithm that builds the decision tree structure from splitting on the given training dataset.  Afterwards, the training dataset is no longer needed, and the decision tree representation is used instead to predict the target concept, which, in this case, if a student may fail graduation and need early intervention.  A decision tree representation is made up of three components:</p>
+<h5 id="Decision-Tree-Classifier:">Decision Tree Classifier:<a class="anchor-link" href="#Decision-Tree-Classifier:">&#182;</a></h5><p>This learning model uses a tree structure to represent decision boundaries, where a series of questions are asked until a final descrete output answer is obtained.  To help narrow the search space for a what a <em>good question</em> to ask near the top of the tree to provide a good split of the decision boundaries, the concept of entropy is introduced.  Entropy is a measure of impurities in a bunch of examples where 0.0 entropy means that all of the samples belongs to one class, and 1.0 means maximum entropy and that the dataset can be evenly split between classes.  The <strong>Decision Tree Classifier's</strong> goal is to be able to find all of the features in the dataset that will produce maximum entropies to produce <em>good</em> splits near the top.  The mathematical formular for entropy is:</p>
+$$Entropy=\sum_{i} -p_{i} log_{2}( p_{i} )$$<p>Where p<sub>i</sub> is the fraction of examples in class<sub>i</sub>.  In addition, there is the concept of <em>Information Gain</em>, which is given by the formular:</p>
+$$Information\: Gain = Entropy(parent) - \Bigg[ \begin{align*} weighted\\
+average
+\end{align*} \Bigg] Entropy(children)$$<p>The <em>Decision Tree</em> algorithm is to maximize <em>Information Gain</em> at each split.</p>
+<p>There is an ID3 algorithm that builds the decision tree structure from splitting on the given training dataset maximizing on <em>Information Gain</em>.  Afterwards, the training dataset is no longer needed, and the decision tree representation is used instead to predict the target concept, which, in this case, if a student may fail graduation and need early intervention.  A decision tree representation is made up of three components:</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/CART_tree_titanic_survivors.png" title="A Decision Tree showing survival of passengers on the Titanic, CC BY-SA 3.0 by Stephen Milborrow"></p>
 <ul>
 <li><code>Decision Nodes:</code> Where a feature, feature range or a feature vector is selected from the dataset and a question is asked.  This is represented as <strong><code>questions..?</code></strong> in the diagram above.  The answer values to the question are what the edges (branches) represent in the tree.  The <code>Decision Tree</code> starts at the <code>Root Decision Node</code>, where hopefully we start with good splits at the top.</li>
@@ -12187,7 +12192,7 @@ Testing set has 95 samples.
 <p>This learning model follows <strong>Occam's Razor</strong>, it is simple, as long as the Student dataset has a well defined decision boundary that can be split near the top of the decision tree.  While there are many features to evaluate for good splits at the top, the dataset is not large, so training and testing time should be minimal.  We may require to tune the <strong>Decision Tree Classifier</strong> learning model so that overfitting does not lower its prediction accuracy as we add additional training data or features.  Once the decision tree is contructed and optimized, the computational query time should also be minimal.</p>
 <h5 id="Support-Vector-Machines-Classifier-(SVC):">Support Vector Machines Classifier (SVC):<a class="anchor-link" href="#Support-Vector-Machines-Classifier-(SVC):">&#182;</a></h5><p>This learning model seeks to find optimal separators in the datasets such that the boundary separating the two sub-datasets is maximized.  This boundary or linear separator is also known as the <em>margin</em> and the maximum margin between the separation can be found using <em>Quadratic Programs</em>.  It was found that the <em>Quadratic Programs</em> used certain input data points within the dataset near the data separations to find the maximum margins as denoted by 2/||w|| in the diagram below.  These data points were called <em>Support Vectors</em>; and thus, the model is now known as a <strong>Support Vector Machine (SVM) Classifier (SVC)</strong> because the learning model finds the <em>Support Vectors</em> to build the maximum margin separator.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Svm_max_sep_hyperplane_with_margin.png" title="Maximum-margin hyperplane and margins for an SVM trained with samples from two classes. Samples on the margin are called the support vectors., ~CC~: Public Domain by Cyc" width="300" height="300"></p>
-<p>This learning model is considered to be an <strong>eager lazy learners</strong>, or only as lazy as necessary to represent what is needed, and the rest of the data that is not <em>Support Vectors</em> in the dataset are ignored as can be seen in the diagram above as not all points are involved in defining the maximum margin separator.</p>
+<p>This learning model is considered to be an <strong>eager lazy learner</strong>, or only as lazy as necessary to represent what is needed, and the rest of the data that is not <em>Support Vectors</em> in the dataset are ignored as can be seen in the diagram above as not all points are involved in defining the maximum margin separator.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Kernel_Machine.svg" title="Kernel machines are used to compute a non-linearly separable functions into a higher dimension linearly separable function, CC BY-SA 4.0 by User:Zirguezi", width="600" height="300"></p>
 <p>An interesting feature of the SVM is that we can use a higher order function in the matrix dot products that compute the <em>Quadratic Programs</em> to <em>project</em> a non-linear separation into a hyperplane that is linearly separable by the SVM.  This is known as the <strong>Kernel Trick</strong> and the <em>Kernel Function</em> is usually shown as <em>K(x,y)</em>, but as <em>ø</em> in the diagram above.  The sets of equations that makes up the <em>K(x,y)</em> turns out to be a either a <em>similarity, or distance function</em> that represents all of our domain knowledge of the dataset that should losely satisfy what is known as the <em>Mercer Condition</em>.</p>
 <p>Some real-world applicaton for this learning model includes:</p>
@@ -12214,7 +12219,7 @@ Testing set has 95 samples.
 <li>The internals of the SVM is a blackbox and we may not understand any internal prepresentations of the modeled solution well.</li>
 </ul>
 <p>This learning model is a more complex model than the <em>Decision Tree Classifer</em>.  Its usefulness is that in case the dataset is not readily predictable by the <em>Decision Tree Classifier</em>, the <strong>Support Vector Machine Classifier</strong> will have a better chance at predicting students <em>pass|fail</em> if the input data is not linearly separatable.  We are hopeful this will not be the case; however, having this learning model as a possible fallback option is desirable.</p>
-<h5 id="Ensemble-Methods:-Random-Forest-Classifier-(RandomForestClassifier):">Ensemble Methods: Random Forest Classifier (RandomForestClassifier):<a class="anchor-link" href="#Ensemble-Methods:-Random-Forest-Classifier-(RandomForestClassifier):">&#182;</a></h5><p>This learning model seeks to construct and combine multiple <em>Decision Trees Classifiers</em> as <em>weak learners</em> using <em>random</em> splits, as apposed to <em>best</em> fit, at training time to hopefully better fit the data and reduce overfitting.  In addition, the learning algorthm has been modified to pick a random subset of features at each split so that each random tree could decrease overfitting by decreasing the component tree variance overall when the trees outputs are merged, see diagram below.  Its representation, training and prediction methods are the same as that of the <em>Decision Tree Classifier</em> as shown above in the <strong>Decision Tree Classifier</strong> section, but there are multiple of them, and their splits at the top may not be <em>good</em> since the feature they split on is set to <em>random</em> instead of <em>best</em>.  Once their feature has been selected, they then find a valiable or value that optimally splits the subset and continue with the random splits further down the tree.  Their outputs are combined by using either mean/average voting or a weighted voting algorthm.</p>
+<h5 id="Ensemble-Methods:-Random-Forest-Classifier-(RandomForestClassifier):">Ensemble Methods: Random Forest Classifier (RandomForestClassifier):<a class="anchor-link" href="#Ensemble-Methods:-Random-Forest-Classifier-(RandomForestClassifier):">&#182;</a></h5><p>This learning model seeks to construct and combine multiple <em>Decision Trees Classifiers</em> as <em>weak learners</em> using <em>random</em> splits, as apposed to <em>best</em> fit, at training time to hopefully better fit the data and reduce overfitting.  In addition, the learning algorthm has been modified to pick a random subset of features at each split so that each random tree could decrease overfitting by decreasing the component tree variance overall when the trees outputs are merged, see diagram below.  Its representation, training and prediction methods are the same as that of the <em>Decision Tree Classifier</em> as shown above in the <strong>Decision Tree Classifier</strong> section, but there are multiple of them, and their splits at the top may not be <em>good</em> since the feature they split on is set to <em>random</em> instead of <em>best</em>.  Once their feature has been selected, they then find a valiable or value that optimally splits the subset and continue with the random splits further down the tree.  Their outputs are combined by using either mean/average voting or a weighted voting algorthms.</p>
 <p><img src="https://citizennet.com/blog/wp-content/uploads/2012/11/RF.jpg" title="Random Forest: Using random subset feature splits, Copyright, November 10, 2012 by Dan Benyamin", width="600" height="400"></p>
 <p>Some real-world applications for this learning model includes:</p>
 <ul>
@@ -12242,7 +12247,7 @@ Testing set has 95 samples.
 <li>ID3 algorithm will continue until all outputs are decided in the training unless we prune.</li>
 <li>Multiple trees in the random forest will increase computational resources and time for both training and prediction.</li>
 </ul>
-<p>This learning model is part of the <em>Ensemble Learning Methods</em>, which seeks to implement complex learning, by combining simple learning components, and in this case, using the <em>Decision Tree Classifiers</em>.  So, instead of using the <em>best</em> split possible near the top, it seeks to instead generate multiple random trees with random set-feature splits, so as to not need to find the <em>best</em> split which may not be found by a direct algorthm or may require a horendous training time.  By using this method, this learning algorthm hopes that the randomness of the trees structure will naturally model the underlying dataset and produce the desired predictions more accurately once the component trees in the random forest are merge to a single output classifier.  However, since we are now dealing with multiple trees in the random forest, performance will suffer.</p>
+<p>This learning model is part of the <em>Ensemble Learning Methods</em>, which seeks to implement complex learning, by combining simple learning components, and in this case, using the <em>Decision Tree Classifiers</em>.  So, instead of using the <em>best</em> split possible near the top, it seeks to instead generate multiple random trees with random subset-feature splits, so as to not need to find the <em>best</em> split which may not be found by a direct algorthm or may require a horendous training time.  By using this method, this learning algorthm hopes that the randomness of the trees structure will naturally model the underlying dataset and produce the desired predictions more accurately once the component trees in the random forest are merge to a single output classifier.  However, since we are now dealing with multiple trees in the random forest, performance will suffer.</p>
 
 </div>
 </div>
@@ -12267,7 +12272,7 @@ Testing set has 95 samples.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">train_classifier</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
@@ -12340,7 +12345,7 @@ Testing set has 95 samples.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import the three supervised learning models from sklearn</span>
@@ -12349,31 +12354,19 @@ Testing set has 95 samples.
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="c1"># TODO: Initialize the three models</span>
-<span class="n">clf_A</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
-<span class="n">clf_B</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
-<span class="n">clf_C</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">clf_A</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">clf_B</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">clf_C</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># TODO: Set up the training set sizes</span>
-<span class="n">X_train_100</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
-<span class="n">y_train_100</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
-
-<span class="n">X_train_200</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
-<span class="n">y_train_200</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
-
-<span class="n">X_train_300</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span>
-<span class="n">y_train_300</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span>
+<span class="c1"># Done in loop</span>
 
 <span class="c1"># TODO: Execute the &#39;train_predict&#39; function for each classifier and each training set size</span>
 <span class="c1"># train_predict(clf, X_train, y_train, X_test, y_test)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="p">[</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">clf_B</span><span class="p">,</span> <span class="n">clf_C</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]:</span>
+        <span class="n">train_predict</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
 </pre></div>
 
 </div>
@@ -12387,59 +12380,77 @@ Testing set has 95 samples.
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Training a DecisionTreeClassifier using a training set size of 100. . .
-Trained model in 0.0019 seconds
-Made predictions in 0.0005 seconds.
+Trained model in 0.0013 seconds
+Made predictions in 0.0010 seconds.
 F1 score for training set: 1.0000.
-Made predictions in 0.0005 seconds.
-F1 score for test set: 0.6833.
+Made predictions in 0.0006 seconds.
+F1 score for test set: 0.6942.
+
+
 Training a DecisionTreeClassifier using a training set size of 200. . .
-Trained model in 0.0026 seconds
+Trained model in 0.0025 seconds
+Made predictions in 0.0003 seconds.
+F1 score for training set: 1.0000.
+Made predictions in 0.0007 seconds.
+F1 score for test set: 0.7132.
+
+
+Training a DecisionTreeClassifier using a training set size of 300. . .
+Trained model in 0.0040 seconds
 Made predictions in 0.0004 seconds.
 F1 score for training set: 1.0000.
 Made predictions in 0.0003 seconds.
-F1 score for test set: 0.7368.
-Training a DecisionTreeClassifier using a training set size of 300. . .
-Trained model in 0.0028 seconds
-Made predictions in 0.0003 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0002 seconds.
-F1 score for test set: 0.7377.
+F1 score for test set: 0.7167.
+
+
 Training a SVC using a training set size of 100. . .
-Trained model in 0.0023 seconds
+Trained model in 0.0024 seconds
 Made predictions in 0.0021 seconds.
 F1 score for training set: 0.8591.
 Made predictions in 0.0016 seconds.
 F1 score for test set: 0.7838.
+
+
 Training a SVC using a training set size of 200. . .
-Trained model in 0.0085 seconds
-Made predictions in 0.0059 seconds.
+Trained model in 0.0070 seconds
+Made predictions in 0.0052 seconds.
 F1 score for training set: 0.8693.
-Made predictions in 0.0028 seconds.
+Made predictions in 0.0030 seconds.
 F1 score for test set: 0.7755.
+
+
 Training a SVC using a training set size of 300. . .
-Trained model in 0.0154 seconds
-Made predictions in 0.0108 seconds.
+Trained model in 0.0151 seconds
+Made predictions in 0.0110 seconds.
 F1 score for training set: 0.8692.
 Made predictions in 0.0035 seconds.
 F1 score for test set: 0.7586.
+
+
 Training a RandomForestClassifier using a training set size of 100. . .
-Trained model in 0.0706 seconds
-Made predictions in 0.0104 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0100 seconds.
-F1 score for test set: 0.7132.
+Trained model in 0.0685 seconds
+Made predictions in 0.0103 seconds.
+F1 score for training set: 0.9764.
+Made predictions in 0.0103 seconds.
+F1 score for test set: 0.7031.
+
+
 Training a RandomForestClassifier using a training set size of 200. . .
-Trained model in 0.0865 seconds
-Made predictions in 0.0116 seconds.
-F1 score for training set: 0.9888.
-Made predictions in 0.0106 seconds.
-F1 score for test set: 0.8175.
-Training a RandomForestClassifier using a training set size of 300. . .
-Trained model in 0.0698 seconds
+Trained model in 0.0893 seconds
+Made predictions in 0.0115 seconds.
+F1 score for training set: 0.9925.
 Made predictions in 0.0104 seconds.
-F1 score for training set: 0.9951.
-Made predictions in 0.0100 seconds.
-F1 score for test set: 0.7941.
+F1 score for test set: 0.6829.
+
+
+Training a RandomForestClassifier using a training set size of 300. . .
+Trained model in 0.0750 seconds
+Made predictions in 0.0122 seconds.
+F1 score for training set: 0.9903.
+Made predictions in 0.0111 seconds.
+F1 score for test set: 0.7852.
+
+
 </pre>
 </div>
 </div>
@@ -12476,24 +12487,24 @@ F1 score for test set: 0.7941.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0019 seconds</td>
-<td style="text-align:center">0.0005 seconds</td>
+<td style="text-align:center">0.0013 seconds</td>
+<td style="text-align:center">0.0006 seconds</td>
 <td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.6833</td>
+<td style="text-align:center">0.6942</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0026 seconds</td>
-<td style="text-align:center">0.0003 seconds</td>
+<td style="text-align:center">0.0025 seconds</td>
+<td style="text-align:center">0.0007 seconds</td>
 <td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.7368</td>
+<td style="text-align:center">0.7132</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0028 seconds</td>
-<td style="text-align:center">0.0002 seconds</td>
+<td style="text-align:center">0.0040 seconds</td>
+<td style="text-align:center">0.0003 seconds</td>
 <td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.7377</td>
+<td style="text-align:center">0.7167</td>
 </tr>
 </tbody>
 </table>
@@ -12510,21 +12521,21 @@ F1 score for test set: 0.7941.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0023 seconds</td>
+<td style="text-align:center">0.0024 seconds</td>
 <td style="text-align:center">0.0016 seconds</td>
 <td style="text-align:center">0.8591</td>
 <td style="text-align:center">0.7838</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0085 seconds</td>
-<td style="text-align:center">0.0028 seconds</td>
+<td style="text-align:center">0.0070 seconds</td>
+<td style="text-align:center">0.0030 seconds</td>
 <td style="text-align:center">0.8693</td>
 <td style="text-align:center">0.7755</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0154 seconds</td>
+<td style="text-align:center">0.0151 seconds</td>
 <td style="text-align:center">0.0035 seconds</td>
 <td style="text-align:center">0.8692</td>
 <td style="text-align:center">0.7586</td>
@@ -12544,24 +12555,24 @@ F1 score for test set: 0.7941.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0706 seconds</td>
-<td style="text-align:center">0.0100 seconds</td>
-<td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.7132</td>
+<td style="text-align:center">0.0685 seconds</td>
+<td style="text-align:center">0.0103 seconds</td>
+<td style="text-align:center">0.9764</td>
+<td style="text-align:center">0.7031</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0865 seconds</td>
-<td style="text-align:center">0.0106 seconds</td>
-<td style="text-align:center">0.9888</td>
-<td style="text-align:center">0.8175</td>
+<td style="text-align:center">0.0893 seconds</td>
+<td style="text-align:center">0.0104 seconds</td>
+<td style="text-align:center">0.9925</td>
+<td style="text-align:center">0.6829</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0698 seconds</td>
-<td style="text-align:center">0.0100 seconds</td>
-<td style="text-align:center">0.9951</td>
-<td style="text-align:center">0.7941</td>
+<td style="text-align:center">0.0750 seconds</td>
+<td style="text-align:center">0.0122 seconds</td>
+<td style="text-align:center">0.9903</td>
+<td style="text-align:center">0.7852</td>
 </tr>
 </tbody>
 </table>
@@ -12594,8 +12605,8 @@ F1 score for test set: 0.7941.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong>  From the Model Performance Matrix, it would appear that the <strong>Ensamble Methods: Random Forest (RandomForestClassifier)</strong> is the best model based on its final F<sub>1</sub> test scores of <strong>0.7941</strong>; however, we know that this learning model is based on the <strong>Decision Tree Classifier</strong>, which ran ~ 25X faster in training and more than 30X faster predicting the test set.  Even though the F<sub>1</sub> test score for the <strong>Decision Tree Classifier</strong> seems low, we can see by the F<sub>1</sub> training score, that it is overfitting to the training data.  This overfitting can be tuned when we optimize the learning model in the next step.</p>
-<p>Since we know we can achieve at least <strong>0.7941</strong> F<sub>1</sub> test score using <strong>Random Forst</strong>, which is based on the <strong>Decision Tree Classifier</strong>, against the same training and testing datasets, we should be able to tune the <strong>Decision Tree Classifier</strong> to achieve the same <strong>0.7941</strong> or even better F<sub>1</sub> test score results.  Using <strong>Occam's Razor Principle</strong> (simpler is better), I assert that <strong>Decision Tree classifier</strong> is the best model out of the three selected model based on the available data, limited resources, cost and performance.</p>
+<p><strong>Answer: </strong>  From the Model Performance Matrix, it would appear that the <strong>Ensamble Methods: Random Forest (RandomForestClassifier)</strong> is the best model based on its final F<sub>1</sub> test scores of <strong>0.7852</strong>; however, we know that this learning model is based on the <strong>Decision Tree Classifier</strong>, which ran ~ 18X faster in training and more than 40X faster predicting the test set.  Even though the F<sub>1</sub> test score for the <strong>Decision Tree Classifier</strong> seems low, we can see by the F<sub>1</sub> training score, that it is overfitting to the training data.  This overfitting can be tuned out when we optimize the learning model in the next step.</p>
+<p>Since we know we can achieve at least <strong>0.7852</strong> F<sub>1</sub> test score using <strong>Random Forst</strong>, which is based on the <strong>Decision Tree Classifier</strong>, against the same training and testing datasets, we should be able to tune the <strong>Decision Tree Classifier</strong> to achieve the same <strong>0.7852</strong> or even better F<sub>1</sub> test score results.  Using <strong>Occam's Razor Principle</strong> (simpler is better), I assert that <strong>Decision Tree classifier</strong> is the best model out of the three selected model based on the available data, limited resources, cost and performance.</p>
 
 </div>
 </div>
@@ -12618,8 +12629,9 @@ F1 score for test set: 0.7941.
 <p><strong>Answer: </strong></p>
 <p>Hello and thank you for allowing me to present the final model for the <strong>Student Intervention</strong> project.  This model is based on the <strong>Decision Tree Classifier</strong>, a learning model that generates <em>Decision Trees</em>, which uses a series of questions and intermidiate answers to obtain a final desired <strong>prediction (passed|failed)</strong>.  Below shows a prepresentation of what one of these questions and answer graphs or <strong>trees</strong> looks like when rendered:</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/CART_tree_titanic_survivors.png" title="A Decision Tree showing survival of passengers on the Titanic, CC BY-SA 3.0 by Stephen Milborrow"></p>
-<p>The diagam above shows an example <em>Decision Tree</em>, which asks a series of questions and obtains a set of intermidiate answers to resolve a <strong>prediction (survived|died)</strong> for passwengers on the Titanic.  In this particular case, the question <strong>is sex male?</strong> is at the root of the <em>Decision Tree</em> and where all queries for predictions starts.  As can be seen in the diagram, your rate of survival is poor if you happen to be male and over 9.5 years old in this model.</p>
-<p><strong>Model Training and Prediction Behavior:</strong> In general, we will first split the student dataset into two: a training dataset and a testing dataset.  The training dataset will be given to the model to build the <em>Decision Tree</em> for our student intervention project, and the testing dataset will be use to score the accuracy of the generated <em>Decision Tree's</em> predictions.  The <strong>Decision Tree Classifier</strong> will analyze the student training dataset and determine the best question to ask near the root of the <em>Decision Tree</em> to have the best determination of which student in the dataset will pass or fail their graduation.  As additional questions and answers are derived and resolved, the <strong>Decision Tree Classifier</strong> will determine if it needs to ask another question to obtain a better prediction against the training set.  Once the <strong>Decision Tree Classifier</strong> has resolved all questions and generated a complete <em>Decision Tree</em>, predictions against new students can simply be obtained by applying the <em>Decision Tree</em> to the new students' information resulting in their pass or fail graduation predictions.  As can be seen, this is a simple model in both representation and execution while using our existing data, limited resources and budgets wisely.  We believe this new graduation prediction model will help the school district bring their graduation success rate up by identifying students that needs intervention early before graduation.</p>
+<p>The diagam above shows an example <em>Decision Tree</em>, which asks a series of questions to predict the survival rate of passengers on the Titanic.  In this particular case, the question <strong>is sex male?</strong> is at the root of the <em>Decision Tree</em> and where all queries for predictions starts.  The first major group separation starts at the root of the tree.  And as can be seen in the diagram, your rate of survival is poor if you happen to be male and over 9.5 years old in this model.</p>
+<p><strong>Model Training and Prediction Behavior:</strong> In general, we will first split the student dataset into two: a training dataset and a testing dataset.  The training dataset will be given to the model to build the <em>Decision Tree</em> for our student intervention project, and the testing dataset will be use to score the accuracy of the generated <em>Decision Tree's</em> predictions.  Since the training dataset has historical data of prior students, the <em>Decision Tree Classifier</em> can search the dataset for patterns that led those students to either pass or fail their graduation.  When learning from the training set, the <em>Decision Tree Classifier</em> will use the randomness (noise) in the dataset to help it sort and group similar students together and separate them from dissimilar students. Each time it generates a new candidate group by asking a question in the dataset, the <em>Decision Tree Classifier</em> will evaluate the new candidate group on its effectiveness in getting closer to resolving whether its group of students will either pass or fail graduation.  If the grouping is effective, the <em>Decision Tree Classifier</em> will split the dataset into the subgroups and create a branching tree structure.  In general, the <em>Decision Tree Classifier</em> will prefer to generate groupings that will lead to correct pass|fail separations, follow by the large groupings, so as to determine a student's pass|fail prediction using the fewest steps.</p>
+<p>Once the <em>Decision Tree Classifier</em> has resolved all grouping and generated a complete <em>Decision Tree</em>, predictions against new students can simply be obtained by applying the <em>Decision Tree</em> to the new students' information resulting in their pass or fail graduation predictions.  As can be seen, this is a simple model in both representation and execution while using our existing data, limited resources and budgets wisely.  We believe this new graduation prediction model will help the school district bring their graduation success rate up by identifying students that needs intervention early before graduation.</p>
 
 </div>
 </div>
@@ -12650,7 +12662,7 @@ F1 score for test set: 0.7941.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import &#39;GridSearchCV&#39; and &#39;make_scorer&#39;</span>
@@ -12658,7 +12670,7 @@ F1 score for test set: 0.7941.
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span>
 
 <span class="c1"># TODO: Create the parameters list you wish to tune</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;criterion&#39;</span><span class="p">:(</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span><span class="s1">&#39;entropy&#39;</span><span class="p">),</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">128</span><span class="p">],</span> <span class="s1">&#39;random_state&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">]}</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;criterion&#39;</span><span class="p">:(</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span><span class="s1">&#39;entropy&#39;</span><span class="p">),</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">128</span><span class="p">],</span> <span class="s1">&#39;random_state&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">]}</span>
 
 <span class="c1"># TODO: Initialize the classifier</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
@@ -12670,7 +12682,7 @@ F1 score for test set: 0.7941.
 <span class="n">grid_obj</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">f1_scorer</span><span class="p">)</span>
 
 <span class="c1"># TODO: Fit the grid search object to the training data and find the optimal parameters</span>
-<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">)</span>
+<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="c1"># Get the estimator</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
@@ -12731,7 +12743,7 @@ Confusion matrix for Decision Tree:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>The final F<sub>1</sub> test score for the tuned <strong>Decision Tree Classifier</strong> is <strong>0.8029</strong>.  This means we were able to achieve better performance than the <strong>Ensamble Methods: Random Forest Classifier</strong> by <strong>0.0088!</strong>, while at the same time increasing our prediction execution time to 0.0003 from 0.0002 seconds per execution.  Overall, the major tuning parameter that made the difference was <em>max_depth</em>.  This tuning parameter prevents the <strong>Decision Tree Classifier</strong> from overfitting to the training dataset to increase bias to the training data and thus allow for lower variance with the testing data, and a better fit in general for the student population.</p>
+<p>The final F<sub>1</sub> test score for the tuned <strong>Decision Tree Classifier</strong> is <strong>0.8029</strong>.  This means we were able to achieve better performance than the <strong>Ensamble Methods: Random Forest Classifier</strong> by <strong>0.0177!</strong>, while at the same time maintaining our prediction execution time at 0.0003 seconds per execution.  Overall, the major tuning parameter that made the difference was <em>max_depth</em>.  This tuning parameter prevents the <strong>Decision Tree Classifier</strong> from overfitting to the training dataset to increase bias to the training data and thus allow for lower variance with the testing data, and a better fit in general for the student population.</p>
 <p><strong> Decision Tree Classifier (DecisionTreeClassifier):</strong></p>
 <table>
 <thead><tr>
@@ -12745,10 +12757,10 @@ Confusion matrix for Decision Tree:
 <tbody>
 <tr>
 <td style="text-align:center">Untuned</td>
+<td style="text-align:center">0.0004 seconds</td>
 <td style="text-align:center">0.0003 seconds</td>
-<td style="text-align:center">0.0002 seconds</td>
 <td style="text-align:center">1.0000</td>
-<td>0.7377</td>
+<td>0.7167</td>
 </tr>
 <tr>
 <td style="text-align:center">Tuned</td>
@@ -12759,7 +12771,7 @@ Confusion matrix for Decision Tree:
 </tr>
 </tbody>
 </table>
-<p>The result from tuning the <em>max_depth</em> parameter reduced the overfitting to the training data from 1.000 to 0.8136 based on the F<sub>1</sub> training score, while bringing up the F<sub>1</sub> testing score from 0.7377 to 0.8029, meeting our objective of going above the <strong>Random Forest Classifier</strong> F<sub>1</sub> testing score of 0.7941.</p>
+<p>The result from tuning the <em>max_depth</em> parameter reduced the overfitting to the training data from 1.000 to 0.8136 based on the F<sub>1</sub> training score, while bringing up the F<sub>1</sub> testing score from 0.7167 to 0.8029, meeting our objective of going above the <strong>Random Forest Classifier</strong> F<sub>1</sub> testing score of 0.7852.</p>
 <p>In addition, we ran the tuned <strong>Decision Tree Classifier</strong> model through the <em>Confusion Matrix</em> to determine where the error was in the model.</p>
 <p><strong> Confusion Matrix:</strong></p>
 <table>
