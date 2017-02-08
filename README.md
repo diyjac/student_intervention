@@ -1,6 +1,6 @@
 # Student_intervention
 
-Student_intervention is a *project result submission* for Udacity student_intervention project.  It is a worksheet in **Jupyter Notebook** to supervised machine learning models to identify students who might need early intervention before they fail to graduate from a given dataset.
+Student_intervention is a *project result submission* for Udacity student_intervention project.  It is a worksheet in **Jupyter Notebook**, in which we will use supervised machine learning models to identify students who might need early intervention before they fail to graduate with a given dataset.
 
 ## Installation
 
